@@ -1,4 +1,3 @@
-import Default_button from '../components/button';
 
 import Register from "../app/register/page";
 export default function Home() {
