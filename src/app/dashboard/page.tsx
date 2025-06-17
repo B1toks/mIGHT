@@ -19,7 +19,7 @@ export default function DashboardRedirect() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (!isAuthenticated) {
-        router.push("/login"); 
+        router.push("/main"); 
         return;
       }
 
