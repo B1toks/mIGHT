@@ -9,7 +9,7 @@ const navItems = [
   { icon: Home, href: "/main", tooltip: "Головна" },
   { icon: Book, href: "/courses", tooltip: "Курси" },
   { icon: PencilLine, href: "/tasks", tooltip: "Завдання" },
-  { icon: BarChart, href: "/progres", tooltip: "Звіти" },
+  { icon: BarChart, href: "/progress", tooltip: "Звіти" },
 ];
 
 const Sidebar = () => {

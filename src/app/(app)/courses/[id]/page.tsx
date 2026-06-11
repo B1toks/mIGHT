@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { CourseTabs } from '../../../components/courses/CourseTabs';
-import { CourseOverview } from '../../../components/courses/CourseOverview';
-import TasksTab from '../../../components/courses/TasksTab';
-import NewsTab from '../../../components/courses/NewsTab';
-import JournalTab from '../../../components/courses/JournalTab';
+import { CourseTabs } from '@/components/courses/CourseTabs';
+import { CourseOverview } from '@/components/courses/CourseOverview';
+import TasksTab from '@/components/courses/TasksTab';
+import NewsTab from '@/components/courses/NewsTab';
+import JournalTab from '@/components/courses/JournalTab';
 import type { Role } from '@/types';
 
 export default function CoursePage() {

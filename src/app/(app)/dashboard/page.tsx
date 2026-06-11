@@ -26,7 +26,7 @@ export default function DashboardRedirect() {
       if (role && roleRoutes[role]) {
         router.push(roleRoutes[role]);
       } else {
-        router.push("/register");
+        router.push("/login");
       }
     }
   }, [role, isAuthenticated, router]);

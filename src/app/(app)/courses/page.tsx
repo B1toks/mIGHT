@@ -1,6 +1,6 @@
 'use client';
 
-import CourseCard from '../../components/courses/CourseCard';
+import CourseCard from '@/components/courses/CourseCard';
 import type { Role } from '@/types'; 
 import Link from "next/link";
 

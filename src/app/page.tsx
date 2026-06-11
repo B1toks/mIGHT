@@ -1,18 +1,9 @@
+import { redirect } from "next/navigation";
 
-import Register from "../app/register/page";
+// Server Component: рішення "куди вести з кореня" приймається на сервері,
+// до того як браузер отримає хоч один байт UI.
+// TODO(backend): коли підключимо auth — читати сесію і вести
+// залогінених одразу на /dashboard.
 export default function Home() {
-  return (
-
-    <Register />
-    // <div className="min-h-screen min-w-screen flex items-center justify-center flex-col gap-8 text-foreground">
-    //   <div className="flex items-center justify-center">
-    //     <h1 className="text-3xl font-bold text-black sm:text-2xl md:text-3xl lg:text-4xl dark:text-white">
-    //       Tailwind працює
-    //     </h1>
-    //   </div>
-    //   <div className="bg-yellow-500 w-full">
-    //     <Default_button />
-    //   </div>
-    // </div>
-  );
+  redirect("/login");
 }

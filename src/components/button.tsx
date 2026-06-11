@@ -7,7 +7,7 @@ export default function Default_button() {
   const router = useRouter();
 
   const handleRedirect = () => {
-    router.push("/register"); 
+    router.push("/login");
   };
 
   return (
