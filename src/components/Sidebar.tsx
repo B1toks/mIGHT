@@ -1,37 +1,48 @@
 "use client";
 
-import { Home, Book, PencilLine, BarChart } from "lucide-react";
-// import { cn } from "@/lib/utils";
+import { Home, GraduationCap, SquarePen, TrendingUp } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { icon: Home, href: "/main", tooltip: "Головна" },
-  { icon: Book, href: "/courses", tooltip: "Курси" },
-  { icon: PencilLine, href: "/tasks", tooltip: "Завдання" },
-  { icon: BarChart, href: "/progress", tooltip: "Звіти" },
+  { icon: GraduationCap, href: "/courses", tooltip: "Мої курси" },
+  { icon: SquarePen, href: "/tasks", tooltip: "Мої завдання" },
+  { icon: TrendingUp, href: "/progress", tooltip: "Успішність" },
 ];
 
+// Сайдбар з макета: вузька біла колонка, аватар згори,
+// активний пункт — лаймова «пігулка» за темною іконкою.
 const Sidebar = () => {
+  const pathname = usePathname();
+
   return (
-    <aside className="w-16 h-full bg-white dark:bg-zinc-900 border-r flex flex-col items-center py-4 space-y-4 shadow">
-      <Link href="/profile">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 mb-6 cursor-pointer" />
+    <aside className="w-16 bg-white dark:bg-zinc-900 border-r flex flex-col items-center py-4 gap-3 shrink-0">
+      <Link href="/profile" aria-label="Особистий кабінет">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 mb-4 cursor-pointer ring-2 ring-transparent hover:ring-[var(--color-brand)] transition" />
       </Link>
-      
-      {navItems.map(({ icon: Icon, href, tooltip }, i) => (
-        <Link key={i} href={href}>
-          <Button
-            variant="ghost"
-            className="p-2 hover:bg-blue-100 dark:hover:bg-zinc-800 group relative"
-          >
-            <Icon className="text-blue-500 group-hover:scale-110 transition-transform" />
-            <span className="absolute z-100 left-14 top-1/2 -translate-y-1/2 text-sm bg-zinc-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+
+      {navItems.map(({ icon: Icon, href, tooltip }) => {
+        const active = pathname.startsWith(href);
+        return (
+          <Link key={href} href={href} className="group relative">
+            <span
+              className={cn(
+                "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
+                active
+                  ? "bg-[var(--color-lime-soft)] text-gray-900"
+                  : "text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-800"
+              )}
+            >
+              <Icon className="w-5 h-5" />
+            </span>
+            <span className="absolute z-50 left-14 top-1/2 -translate-y-1/2 text-sm bg-zinc-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
               {tooltip}
             </span>
-          </Button>
-        </Link>
-      ))}
+          </Link>
+        );
+      })}
     </aside>
   );
 };

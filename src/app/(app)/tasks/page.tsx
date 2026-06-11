@@ -1,101 +1,159 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { cn } from '@/lib/utils'
+import { useMemo, useState } from "react";
+import { Check, Clock, ChevronDown } from "lucide-react";
+import PillTabs from "@/components/PillTabs";
+import { TASKS, SUBJECT_CHIP, type TaskRow, type TaskStatus } from "@/data/mock";
 
-type TaskStatus = 'todo' | 'inReview' | 'done'
+// «Мої завдання» з макета: пігулкові таби-фільтри за статусом,
+// фільтр за предметом, рядки-картки з оцінками і статусом.
 
-const statuses: { label: string; value: TaskStatus }[] = [
-  { label: 'До виконання', value: 'todo' },
-  { label: 'На перевірці', value: 'inReview' },
-  { label: 'Виконані', value: 'done' },
-]
+const TABS = ["Усі", "До виконання", "На перевірці", "Виконані"] as const;
 
-const mockTasks = Array.from({ length: 8 }, (_, i) => ({
-  id: i + 1,
-  subject: 'Графічний дизайн',
-  teacher: 'Овчаренко А.О.',
-  deadline: '2024-06-01',
-  status: i < 3 ? 'todo' : i < 6 ? 'inReview' : 'done',
-  mark: i >= 6 ? [12, 10, 9, 6][i - 6] : undefined,
-}))
+const TAB_FILTER: Record<(typeof TABS)[number], (s: TaskStatus) => boolean> = {
+  "Усі": () => true,
+  "До виконання": (s) => s === "not_done" || s === "rework",
+  "На перевірці": (s) => s === "checking",
+  "Виконані": (s) => s === "done",
+};
 
-export default function MyTasksPage() {
-  const [activeTab, setActiveTab] = useState<TaskStatus>('todo')
-  const [search, setSearch] = useState('')
-  const [subjectFilter, setSubjectFilter] = useState('')
+function ScorePill({ value }: { value: string }) {
+  return (
+    <span className="inline-block px-3 py-1 rounded-full bg-[var(--color-brand)] text-white text-xs font-semibold">
+      {value}
+    </span>
+  );
+}
 
-  const filtered = mockTasks.filter(task =>
-    task.status === activeTab &&
-    (!search || task.subject.toLowerCase().includes(search.toLowerCase())) &&
-    (!subjectFilter || task.subject === subjectFilter)
-  )
+function StatusCell({ task }: { task: TaskRow }) {
+  switch (task.status) {
+    case "done":
+      return (
+        <span className="flex items-center gap-2 text-sm">
+          <span className="w-5 h-5 rounded bg-[var(--color-lime)] flex items-center justify-center">
+            <Check className="w-3.5 h-3.5 text-white" />
+          </span>
+          Виконано
+        </span>
+      );
+    case "not_done":
+      return (
+        <span className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="w-5 h-5 rounded border-2 border-gray-300" />
+          Не виконано
+        </span>
+      );
+    case "checking":
+      return (
+        <span className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Clock className="w-4 h-4" />
+          На перевірці
+        </span>
+      );
+    case "rework":
+      return (
+        <span className="text-sm">
+          <span className="block text-muted-foreground text-xs">Дедлайн до:</span>
+          <span className="font-semibold">{task.deadline}</span>
+        </span>
+      );
+  }
+}
+
+export default function TasksPage() {
+  const [tab, setTab] = useState<(typeof TABS)[number]>("Усі");
+  const [subject, setSubject] = useState<string>("Обрати предмет");
+
+  const subjects = useMemo(
+    () => [...new Set(TASKS.map((t) => t.subject))],
+    []
+  );
+
+  const rows = TASKS.filter(
+    (t) =>
+      TAB_FILTER[tab](t.status) &&
+      (subject === "Обрати предмет" || t.subject === subject)
+  );
 
   return (
-    <div className="p-6 md:p-10 w-full max-w-screen-2xl mx-auto">
-      <h1 className="text-2xl font-semibold mb-6 dark:text-white">Мої завдання</h1>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <h1 className="text-2xl font-semibold">Мої завдання</h1>
 
-      <div className="flex flex-wrap items-center gap-2 mb-4">
-        {statuses.map((status) => (
-          <Button
-            key={status.value}
-            variant={activeTab === status.value ? 'default' : 'outline'}
-            onClick={() => setActiveTab(status.value)}
-            className="capitalize"
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <PillTabs tabs={[...TABS]} active={tab} onChange={(t) => setTab(t as typeof TABS[number])} />
+
+        <div className="relative">
+          <select
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            className="appearance-none bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer"
           >
-            {status.label}
-          </Button>
-        ))}
+            <option>Обрати предмет</option>
+            {subjects.map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+          <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" />
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 mb-6">
-        <Input
-          placeholder="Пошук"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-64"
-        />
-        <Select onValueChange={setSubjectFilter}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Предмет" />
-          </SelectTrigger>
-          <SelectContent className='dark:border-zinc-700 bg-white dark:bg-zinc-900'>
-            <SelectItem  value="Графічний дизайн">Графічний дизайн</SelectItem>
-            <SelectItem  value="Основи типографії">Основи типографії</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <div>
+        <div className="grid grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 px-5 pb-2 text-xs text-muted-foreground">
+          <span>Заняття</span>
+          <span>Дата</span>
+          <span>Домашнє завдання</span>
+          <span>Тест</span>
+          <span>Статус</span>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {filtered.map((task) => (
-          <div
-            key={task.id}
-            className={cn(
-              'rounded-lg border dark:border-zinc-700 p-4 bg-white dark:bg-zinc-900 relative transition-all',
-              'hover:shadow-md'
-            )}
-          >
-            {activeTab === 'done' && (
-              <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-zinc-700 text-white text-xs flex items-center justify-center">
-                {task.mark}
+        <div className="space-y-3">
+          {rows.map((task) => (
+            <div
+              key={task.id}
+              className="grid grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 items-center bg-white dark:bg-zinc-900 rounded-2xl border p-5"
+            >
+              <div>
+                <span
+                  className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-medium ${SUBJECT_CHIP[task.color]}`}
+                >
+                  {task.subject}
+                </span>
+                <p className="font-medium mt-1.5 text-sm">{task.title}</p>
               </div>
-            )}
-            <div className="h-32 bg-zinc-400/30 rounded mb-4" />
-            <div className="text-sm text-muted-foreground mb-1">До здачі</div>
-            <div className="text-sm font-medium dark:text-white">{task.subject}</div>
-            <div className="text-xs text-muted-foreground">{task.teacher}</div>
-            <div className="text-xs text-muted-foreground">До {task.deadline}</div>
-          </div>
-        ))}
-        {filtered.length === 0 && (
-          <div className="col-span-full text-muted-foreground text-center py-10">
-            Немає завдань у цьому статусі
-          </div>
-        )}
+
+              <span className="text-sm text-muted-foreground">{task.date}</span>
+
+              <span>
+                {task.needsRework ? (
+                  <button className="px-4 py-1.5 rounded-full bg-[var(--color-brand)] text-white text-xs font-medium hover:brightness-110 transition">
+                    Допрацювати
+                  </button>
+                ) : task.homework ? (
+                  <ScorePill value={task.homework} />
+                ) : (
+                  <span className="text-gray-300">—</span>
+                )}
+              </span>
+
+              <span>
+                {task.test ? (
+                  <ScorePill value={task.test} />
+                ) : (
+                  <span className="inline-block w-8 border-t border-gray-300" />
+                )}
+              </span>
+
+              <StatusCell task={task} />
+            </div>
+          ))}
+
+          {rows.length === 0 && (
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
+              Завдань у цій категорії немає
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  )
+  );
 }

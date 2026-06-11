@@ -40,6 +40,11 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  /* Бренд-кольори mIGHT з макета Figma */
+  --color-brand: #2d68f8;
+  --color-lime: #8fd14f;
+  --color-lime-soft: #eaf6dc;
+  --color-page: #f7f8fa;
 }
 
 :root {
@@ -50,7 +55,7 @@
   --card-foreground: oklch(0.13 0.028 261.692);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.13 0.028 261.692);
-  --primary: oklch(0.21 0.034 264.665);
+  --primary: #2d68f8;
   --primary-foreground: oklch(0.985 0.002 247.839);
   --secondary: oklch(0.967 0.003 264.542);
   --secondary-foreground: oklch(0.21 0.034 264.665);

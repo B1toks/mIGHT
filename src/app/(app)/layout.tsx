@@ -14,7 +14,7 @@ export default function AppLayout({
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar />
-        <main className="flex-1 overflow-y-auto p-6 animate-fade-in">
+        <main className="flex-1 overflow-y-auto p-6 animate-fade-in bg-[var(--color-page)] dark:bg-zinc-950">
           {children}
         </main>
       </div>

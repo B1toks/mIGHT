@@ -1,50 +1,35 @@
-'use client'
+import { NEWS_POSTS } from "@/data/mock";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-const dummyNews = [
-  {
-    author: "Андрій Сергійович Гордєнко",
-    date: "25 травня 2025",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor...",
-    image: null,
-  },
-  {
-    author: "Андрій Сергійович Гордєнко",
-    date: "24 травня 2025",
-    text: "Aenean massa. Cum sociis natoque penatibus...",
-    image: "/placeholder-image.jpg",
-  },
-]
-
+// «Новини» з макета: стрічка постів — автор, посада, час, текст,
+// опційне зображення. Server Component.
 export default function NewsPage() {
   return (
-    <div className="px-6 py-6 space-y-4">
-      <h2 className="text-2xl font-semibold">Новини</h2>
+    <div className="max-w-4xl mx-auto space-y-6">
+      <h1 className="text-2xl font-semibold">Новини</h1>
 
-      {dummyNews.map((news, idx) => (
-        <Card key={idx}>
-          <CardHeader className="flex flex-row items-start gap-4">
-            <Avatar>
-              <AvatarImage src="/avatar.png" alt={news.author} />
-              <AvatarFallback>{news.author[0]}</AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="font-medium">{news.author}</p>
-              <p className="text-xs text-muted-foreground">{news.date}</p>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <p>{news.text}</p>
-            {news.image && (
-              <div className="w-full h-48 bg-muted rounded-md flex items-center justify-center">
-                <span className="text-sm text-muted-foreground">Фото</span>
+      <div className="space-y-4">
+        {NEWS_POSTS.map((post) => (
+          <article
+            key={post.id}
+            className="bg-white dark:bg-zinc-900 rounded-2xl border p-6"
+          >
+            <header className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-sky-300 to-indigo-400 shrink-0" />
+              <div>
+                <p className="font-semibold leading-tight">{post.author}</p>
+                <p className="text-xs text-muted-foreground">{post.role}</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">{post.timeAgo}</p>
               </div>
+            </header>
+
+            {post.hasImage && (
+              <div className="mt-4 h-64 rounded-xl bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-950" />
             )}
-          </CardContent>
-        </Card>
-      ))}
+
+            <p className="mt-4 text-sm leading-relaxed">{post.body}</p>
+          </article>
+        ))}
+      </div>
     </div>
-  )
+  );
 }

@@ -1,143 +1,122 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  Calendar,
-  dateFnsLocalizer,
-  Event as CalendarEvent,
-  View,
-} from "react-big-calendar";
-import {
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  addWeeks,
-  subWeeks,
-  isAfter,
-} from "date-fns";
-import { uk } from "date-fns/locale";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Button } from "@/components/ui/button";
-import lessons from "@/data/lessons.json";
+import { useEffect, useState } from "react";
+import { WEEK_LESSONS, SUBJECT_BLOCK, type Lesson } from "@/data/mock";
 
-interface LessonEvent {
-  title: string;
-  start: string; 
-  end: string;
-  color?: string;
-}
+// Тижневий «Робочий календар» з макета: колонки Пн–Нд, вісь часу
+// 08:00–16:00, кольорові блоки занять, червона лінія поточного часу.
 
-const locales = { uk };
+const DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
+const DAY_START = 8 * 60; // 08:00 у хвилинах
+const DAY_END = 16 * 60;
+const PX_PER_MIN = 56 / 60; // 56px на годину
 
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 1 }),
-  getDay,
-  locales,
-});
-
-type ColoredEvent = CalendarEvent & {
-  color?: string;
+const toMin = (t: string) => {
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + m;
 };
 
-export default function MyCalendar() {
-  const [date, setDate] = useState(new Date());
-  const [events, setEvents] = useState<ColoredEvent[]>([]);
-  const [defaultView, setDefaultView] = useState<View>("week");
-  const [currentView, setCurrentView] = useState<View>("week");
-  const calendarRef = useRef(null);
+function LessonBlock({ lesson }: { lesson: Lesson }) {
+  const top = (toMin(lesson.start) - DAY_START) * PX_PER_MIN;
+  const height = (toMin(lesson.end) - toMin(lesson.start)) * PX_PER_MIN;
+  return (
+    <div
+      className={`absolute left-1 right-1 rounded-lg px-2 py-1.5 overflow-hidden ${SUBJECT_BLOCK[lesson.color]}`}
+      style={{ top, height: Math.max(height, 22) }}
+    >
+      <p className="text-[11px] font-semibold leading-tight truncate">{lesson.title}</p>
+      {height > 34 && (
+        <p className="text-[10px] opacity-70 leading-tight">
+          {lesson.start} - {lesson.end}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default function ScheduleCalendar({ lessons = WEEK_LESSONS }: { lessons?: Lesson[] }) {
+  // Поточний час — лише на клієнті, щоб уникнути hydration mismatch.
+  const [now, setNow] = useState<{ day: number; min: number } | null>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      const newView: View = isMobile ? "day" : "week";
-      setDefaultView(newView);
-      setCurrentView(newView);
+    const update = () => {
+      const d = new Date();
+      setNow({ day: (d.getDay() + 6) % 7, min: d.getHours() * 60 + d.getMinutes() });
     };
-
-    handleResize(); 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    console.log("Loading lessons...");
-
-    const parsedEvents: ColoredEvent[] = lessons
-      .filter((event: LessonEvent) => {
-        const hasAllFields = event.title && event.start && event.end;
-        const start = new Date(event.start);
-        const end = new Date(event.end);
-
-        console.log("Event:", event);
-        console.log("Parsed start:", start);
-        console.log("Parsed end:", end);
-
-        return hasAllFields && isAfter(end, start);
-      })
-      .map((event: LessonEvent) => ({
-        ...event,
-        start: new Date(event.start),
-        end: new Date(event.end),
-      }));
-
-    console.log("Parsed events:", parsedEvents);
-    setEvents(parsedEvents);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const el = document.querySelector(".rbc-allday-cell");
-      if (el) el.remove();
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const hours = Array.from(
+    { length: (DAY_END - DAY_START) / 60 + 1 },
+    (_, i) => DAY_START + i * 60
+  );
+  const bodyHeight = (DAY_END - DAY_START) * PX_PER_MIN;
 
   return (
-    <div className="h-[calc(100vh-100px)] p-4">
-      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-        <Button onClick={() => setDate(new Date())}>Сьогодні</Button>
-        <div className="flex gap-2">
-          <Button onClick={() => setDate((prev) => subWeeks(prev, 1))}>
-            Назад
-          </Button>
-          <Button onClick={() => setDate((prev) => addWeeks(prev, 1))}>
-            Вперед
-          </Button>
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <h2 className="text-lg font-semibold mb-4">Робочий календар</h2>
+
+      <div className="grid" style={{ gridTemplateColumns: "48px repeat(7, 1fr)" }}>
+        <div />
+        {DAYS.map((d) => (
+          <div
+            key={d}
+            className="text-center text-sm font-medium text-[var(--color-brand)] pb-3 border-b"
+          >
+            {d}
+          </div>
+        ))}
+
+        {/* Вісь часу */}
+        <div className="relative" style={{ height: bodyHeight }}>
+          {hours.map((m) => (
+            <span
+              key={m}
+              className="absolute -translate-y-1/2 text-[11px] text-gray-400"
+              style={{ top: (m - DAY_START) * PX_PER_MIN }}
+            >
+              {`${String(Math.floor(m / 60)).padStart(2, "0")}:00`}
+            </span>
+          ))}
         </div>
-      </div>
-      <div className="h-full overflow-x-auto">
-        <Calendar // nomer kabineta
-          toolbar={true} 
-          ref={calendarRef}
-          localizer={localizer}
-          events={events}
-          defaultView={defaultView}
-          view={currentView}
-          onView={(view) => setCurrentView(view)}
-          views={["day", "week"]} 
-          step={30}
-          timeslots={2}
-          date={date}
-          onNavigate={(newDate) => setDate(newDate)}
-          style={{ height: "100%" }}
-          scrollToTime={new Date(1970, 1, 1, 8, 0, 0)}
-          min={new Date(1970, 1, 1, 8, 0, 0)}
-          max={new Date(1970, 1, 1, 19, 0, 0)}
-          eventPropGetter={(event) => ({
-            style: {
-              backgroundColor: event.color || "#2563eb",
-              borderRadius: "6px",
-              color: "white",
-              border: "none",
-              display: "block",
-              padding: "2px 4px",
-            },
-          })}
-          className="border border-border rounded-md"
-        />
+
+        {/* Колонки днів */}
+        {DAYS.map((_, dayIdx) => (
+          <div
+            key={dayIdx}
+            className="relative border-l first:border-l-0"
+            style={{ height: bodyHeight }}
+          >
+            {hours.map((m) => (
+              <div
+                key={m}
+                className="absolute left-0 right-0 border-t border-gray-100 dark:border-zinc-800"
+                style={{ top: (m - DAY_START) * PX_PER_MIN }}
+              />
+            ))}
+
+            {lessons
+              .filter((l) => l.day === dayIdx)
+              .map((l) => (
+                <LessonBlock key={l.id} lesson={l} />
+              ))}
+
+            {now &&
+              now.day === dayIdx &&
+              now.min >= DAY_START &&
+              now.min <= DAY_END && (
+                <div
+                  className="absolute left-0 right-0 z-10 pointer-events-none"
+                  style={{ top: (now.min - DAY_START) * PX_PER_MIN }}
+                >
+                  <div className="h-px bg-red-500" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 -mt-1" />
+                </div>
+              )}
+          </div>
+        ))}
       </div>
     </div>
   );

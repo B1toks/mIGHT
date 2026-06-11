@@ -1,134 +1,113 @@
-'use client'
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import ScheduleCalendar from "@/components/ScheduleCalendar";
+import { DASHBOARD } from "@/data/mock";
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
-import ScheduleCalendar from '@/components/ScheduleCalendar'
-import PageWrapper from "@/components/PageWrapper";
+// Головна студента. Server Component: вся статика рендериться на сервері,
+// інтерактивний тільки календар (лінія поточного часу).
 
-function getTimeLeft(endDate: Date) {
-  const now = new Date()
-  const totalSeconds = Math.max(0, Math.floor((endDate.getTime() - now.getTime()) / 1000))
-  const totalDuration = Math.floor((endDate.getTime() - new Date('2024-09-01').getTime()) / 1000)
+function SemesterGauge() {
+  // Півколо-шкала з макета: градієнтна дуга на синій картці.
+  return (
+    <svg viewBox="0 0 200 110" className="w-44 mx-auto">
+      <defs>
+        <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#d9f99d" />
+          <stop offset="100%" stopColor="#4ade80" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M 20 100 A 80 80 0 0 1 180 100"
+        fill="none"
+        stroke="rgba(255,255,255,0.25)"
+        strokeWidth="14"
+        strokeLinecap="round"
+      />
+      <path
+        d="M 20 100 A 80 80 0 0 1 100 20"
+        fill="none"
+        stroke="url(#gaugeGrad)"
+        strokeWidth="14"
+        strokeLinecap="round"
+      />
+      <text
+        x="100"
+        y="95"
+        textAnchor="middle"
+        className="fill-white"
+        fontSize="44"
+        fontWeight="700"
+      >
+        {DASHBOARD.semesterDaysLeft}
+      </text>
+    </svg>
+  );
+}
 
-  const days = Math.floor(totalSeconds / (60 * 60 * 24))
-  const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / 3600)
-  const minutes = Math.floor((totalSeconds % 3600) / 60)
-  const seconds = totalSeconds % 60
-
-  return { days, hours, minutes, seconds, totalSeconds, totalDuration }
+function StatCard({
+  value,
+  label,
+  href,
+}: {
+  value: number;
+  label: string;
+  href: string;
+}) {
+  return (
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-5 flex items-start justify-between">
+      <div>
+        <p className="text-3xl font-bold">{value}</p>
+        <p className="text-sm text-muted-foreground mt-1">{label}</p>
+      </div>
+      <Link
+        href={href}
+        className="w-10 h-10 rounded-full bg-[var(--color-lime)] flex items-center justify-center text-white hover:brightness-95 transition"
+        aria-label={label}
+      >
+        <ArrowUpRight className="w-5 h-5" />
+      </Link>
+    </div>
+  );
 }
 
 export default function MainPage() {
-  const semesterEnd = new Date('2025-06-30T00:00:00')
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft(semesterEnd))
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft(getTimeLeft(semesterEnd))
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const progress = 1 - timeLeft.totalSeconds / timeLeft.totalDuration
-
   return (
-    <PageWrapper>
-      <div className="flex flex-col p-6 gap-6 bg-background">
-      <div className="flex flex-col md:flex-row gap-6">
-        <Card className="md:w-1/3 bg-zinc-100 dark:bg-zinc-900">
-          <CardHeader>
-            <CardTitle className="text-lg">До кінця семестру</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center relative h-32 w-full">
-              <svg viewBox="0 0 100 50" className="w-full h-full">
-                <path
-                  d="M 10 50 A 40 40 0 0 1 90 50"
-                  fill="none"
-                  stroke="#e4e4e7"
-                  strokeWidth="10"
-                />
-                <path
-                  d="M 10 50 A 40 40 0 0 1 90 50"
-                  fill="none"
-                  stroke="#18181b"
-                  strokeWidth="10"
-                  strokeDasharray="126"
-                  strokeDashoffset={126 * (1 - progress)}
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div className="absolute pt-10 inset-0 flex flex-col justify-center items-center -mt-4">
-                <div className="text-2xl font-bold">{timeLeft.days} днів</div>
-                <div className="text-muted-foreground text-sm">
-                  {timeLeft.hours}г {timeLeft.minutes}хв {timeLeft.seconds}с
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <h1 className="text-2xl font-semibold">Головна</h1>
 
-        <div className="md:w-2/3 flex flex-col gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="bg-zinc-100 dark:bg-zinc-900 justify-center">
-              <CardHeader className="flex flex-row justify-between items-center ">
-                
-                <CardTitle className="text-lg">Мої курси</CardTitle>
-                <Link href="/courses">
-                  
-                  <Button variant="outline" className="text-sm">
-                    Переглянути <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardHeader>
-              <CardContent className="text-muted-foreground text-sm">
-                Переглянь свої активні курси
-              </CardContent>
-            </Card>
-
-            <Card className="bg-zinc-100 dark:bg-zinc-900">
-              <CardHeader className="flex flex-row justify-between items-center">
-                <CardTitle className="text-lg">Невиконані завдання</CardTitle>
-                <Link href="/tasks">
-                  <Button variant="outline" className="text-sm">
-                    Переглянути <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardHeader>
-              <CardContent className="text-muted-foreground text-sm">
-                Перевір, що ще залишилось зробити
-              </CardContent>
-            </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr_1fr] gap-4">
+        <div className="bg-[var(--color-brand)] rounded-2xl p-5 text-white row-span-2">
+          <p className="font-medium">До кінця семестру</p>
+          <div className="mt-4">
+            <SemesterGauge />
+            <p className="text-center text-xs text-blue-100 mt-1">
+              {DASHBOARD.semesterCountdown}
+            </p>
           </div>
-          <Card className="bg-zinc-100 dark:bg-zinc-900">
-            <CardHeader className="flex flex-row justify-between items-center">
-              <CardTitle className="text-lg">Кисленко В.В.</CardTitle>
-              <Link href="/news">
-                <Button variant="outline" className="text-sm">
-                  Переглянути <ArrowRight className="ml-1 h-4 w-4" />
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent className="text-muted-foreground text-sm">
-              Цього тижня (26 травня – 1 червня) в коледжі буде відбуватись...
-            </CardContent>
-          </Card>
+        </div>
+
+        <StatCard value={DASHBOARD.coursesCount} label="Мої курси" href="/courses" />
+        <StatCard value={DASHBOARD.undoneTasks} label="Невиконаних завдань" href="/tasks" />
+
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-4 lg:col-span-2 flex items-center gap-4">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-200 to-orange-400 shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold">{DASHBOARD.announcement.author}</p>
+            <p className="text-sm text-muted-foreground truncate">
+              {DASHBOARD.announcement.text}
+            </p>
+          </div>
+          <Link
+            href="/news"
+            className="w-10 h-10 rounded-full bg-[var(--color-brand)] flex items-center justify-center text-white shrink-0 hover:brightness-110 transition"
+            aria-label="Перейти до новин"
+          >
+            <ArrowUpRight className="w-5 h-5" />
+          </Link>
         </div>
       </div>
-      
-      <Card className="bg-zinc-100 dark:bg-zinc-900">
-        <CardHeader>
-          <CardTitle className="text-lg">Календар</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ScheduleCalendar />
-        </CardContent>
-      </Card>
+
+      <ScheduleCalendar />
     </div>
-    </PageWrapper>
-    
-  )
+  );
 }
