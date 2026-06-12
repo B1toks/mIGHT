@@ -286,3 +286,45 @@ export const CONNECTED_ACCOUNTS = [
   { id: "google", name: "Google", email: "fr0gg0cat1@gmail.com", connected: true },
   { id: "facebook", name: "Facebook", email: "Софія Монько", connected: false },
 ];
+
+// ── Месенджер (messager_main / messager_chat / messager_search) ──
+
+export interface ChatPreview {
+  id: string;
+  name: string;
+  preview: string;
+  time: string;
+  unread?: number;
+}
+
+export const CHAT_LIST: ChatPreview[] = [
+  { id: "c1", name: "Афанасьєва Дар'я Олександрівна", preview: "Фото", time: "13:24" },
+  { id: "c2", name: "Конопенко Віталій Олександрович", preview: "Є конспект із вчорашньої лекції? Не встиг записати", time: "Сб" },
+  { id: "c3", name: "Гордієнко Андрій Сергійович", preview: "Не знаєш, коли буде передача з матану?", time: "Пт" },
+  { id: "c4", name: "Макарова Ольга Степанівна", preview: "Я не бачу завдання на платформі. Це тільки в мене так?", time: "Вт", unread: 6 },
+  { id: "c5", name: "Дорошенко Іван Ігорович", preview: "Хто вже здав есе з соціофілософії? Що питали?", time: "Пн", unread: 2 },
+  { id: "c6", name: "Приходько Миколай Григорович", preview: "Нагадую, завтра здача есе до 18:00. Не затягуйте :)", time: "05 квіт.", unread: 3 },
+  { id: "c7", name: "Гущенко Марія Владиславівна", preview: "Чи треба роздруковувати завдання, чи можна просто скину…", time: "30 трав." },
+  { id: "c8", name: "Верещук Наталія Максимівна", preview: "Нам точно казали до понеділка здати?", time: "24 бер." },
+  { id: "c9", name: "Калач Вікторія Іванівна", preview: "Доброго ранку! Завантажила презентацію до сьогоднішньої…", time: "12 лют." },
+  { id: "c10", name: "Абраменко Данііл Юрійович", preview: "Це вже третій дедлайн за тиждень", time: "02 січ." },
+];
+
+export interface ChatMessage {
+  id: string;
+  mine: boolean;
+  text: string;
+  time: string;
+  dateChip?: string; // показати чип дати перед цим повідомленням
+}
+
+export const CHAT_MESSAGES: ChatMessage[] = [
+  { id: "m1", mine: false, text: "Слухай, пам'ятаєш ти розповідала про лекцію з права?", time: "16:32", dateChip: "11 квітня" },
+  { id: "m2", mine: false, text: "Можеш, будь ласка, її скинути?", time: "16:34" },
+  { id: "m3", mine: true, text: "Заціни", time: "18:32" },
+  { id: "m4", mine: true, text: "https://youtu.be/kce5HTWmecs — Лекція з правознавства. Права на інтелектуальну власність", time: "18:33" },
+  { id: "m5", mine: false, text: "Ти вже робила вже те есе з цінностей суспільства?", time: "16:33", dateChip: "13 квітня" },
+  { id: "m6", mine: false, text: "Бо я от відкрила — і взагалі не розумію, що вони хочуть", time: "16:34" },
+  { id: "m7", mine: true, text: "Ага, вчора ввечері трохи почала. Там треба просто на прикладі якогось фільму/ситуації описати цінність", time: "16:32" },
+  { id: "m8", mine: true, text: "Я писала про взаємоповагу і навела \"Слугу народу\"", time: "16:32" },
+];
