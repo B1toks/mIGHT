@@ -4,10 +4,11 @@ import { z } from "zod";
 // коли з'явиться бек — ці ж правила продублюються там (валідація
 // на клієнті — це UX, валідація на сервері — це безпека).
 
+// У макеті поле називається «Логін» — приймаємо і логін, і email;
+// розрулювання відбудеться на беку.
 export const loginSchema = z.object({
-  email: z.string().min(1, "Вкажіть email").email("Невірний формат email"),
+  login: z.string().min(1, "Вкажіть логін"),
   password: z.string().min(1, "Вкажіть пароль"),
-  rememberMe: z.boolean(),
 });
 
 export type LoginValues = z.infer<typeof loginSchema>;

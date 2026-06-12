@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import AuthShell from "@/components/auth/AuthShell";
 
 export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
@@ -35,6 +36,7 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
+      <AuthShell>
       <Card className="w-full max-w-md p-6 bg-white dark:bg-zinc-900 shadow-lg rounded-xl">
         <CardHeader>
           <h1 className="text-center text-2xl font-semibold">Перевірте пошту</h1>
@@ -52,10 +54,12 @@ export default function ForgotPasswordPage() {
           </Link>
         </CardFooter>
       </Card>
+      </AuthShell>
     );
   }
 
   return (
+    <AuthShell>
     <Card className="w-full max-w-md p-6 bg-white dark:bg-zinc-900 shadow-lg rounded-xl">
       <CardHeader className="space-y-1">
         <h1 className="text-center text-2xl font-semibold">
@@ -93,5 +97,6 @@ export default function ForgotPasswordPage() {
         </CardFooter>
       </form>
     </Card>
+    </AuthShell>
   );
 }

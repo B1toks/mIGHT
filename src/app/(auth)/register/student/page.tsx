@@ -1,5 +1,10 @@
+import AuthShell from "@/components/auth/AuthShell";
 import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterStudentPage() {
-  return <RegisterForm role="student" />;
+  return (
+    <AuthShell>
+      <RegisterForm role="student" />
+    </AuthShell>
+  );
 }
