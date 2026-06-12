@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Search, Plus, ArrowRight, MoreHorizontal } from "lucide-react";
 import PillTabs from "@/components/PillTabs";
+import AdminNav from "@/components/admin/AdminNav";
+import AddUserDialog from "@/components/admin/AddUserDialog";
 import { ADMIN_USERS, type AdminRole } from "@/data/mock";
 
 // Адмінка «Користувачі» — структура з вайрфрейму (users_students/
@@ -33,6 +35,7 @@ function UserAvatar({ name }: { name: string }) {
 export default function AdminUsersPage() {
   const [tab, setTab] = useState(TABS[0].label);
   const [query, setQuery] = useState("");
+  const [addOpen, setAddOpen] = useState(false);
 
   const role = TABS.find((t) => t.label === tab)!.role;
   const users = ADMIN_USERS[role].filter((u) =>
@@ -41,7 +44,8 @@ export default function AdminUsersPage() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      <h1 className="text-2xl font-semibold">Користувачі</h1>
+      <h1 className="text-2xl font-semibold">Адміністрування</h1>
+      <AdminNav />
 
       <PillTabs tabs={TABS.map((t) => t.label)} active={tab} onChange={setTab} />
 
@@ -56,8 +60,10 @@ export default function AdminUsersPage() {
           <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
         </div>
 
-        {/* TODO(backend): модалка add_user_* -> POST /users */}
-        <button className="px-4 py-1.5 rounded-full bg-[var(--color-brand)] text-white text-xs font-medium hover:brightness-110 transition flex items-center gap-1.5">
+        <button
+          onClick={() => setAddOpen(true)}
+          className="px-4 py-1.5 rounded-full bg-[var(--color-brand)] text-white text-xs font-medium hover:brightness-110 transition flex items-center gap-1.5"
+        >
           Додати користувача <Plus className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -90,6 +96,8 @@ export default function AdminUsersPage() {
           </div>
         )}
       </div>
+
+      <AddUserDialog role={role} open={addOpen} onClose={() => setAddOpen(false)} />
     </div>
   );
 }

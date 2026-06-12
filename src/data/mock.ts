@@ -469,3 +469,29 @@ export const COURSE_NEWS: CourseNewsPost[] = [
     body: "Друзі, хочу повідомити, що в середу о 17:00 відбудеться відкрита гостьова лекція від запрошеного дизайнера з компанії Readdle. Тема: «Особливості проектування інтерфейсів для iOS та Android». Лекція пройде онлайн, посилання додам у день події. Дуже рекомендую долучитися — буде цікаво і корисно для ваших проєктів!",
   },
 ];
+
+// ── Адмін-дашборд (структурна карта адміна; hi-fi немає — заглушки) ──
+
+export const ADMIN_STATS = {
+  students: 412,
+  teachers: 38,
+  activeCourses: 27,
+  attendance: 92, // % за поточний тиждень
+};
+
+// ── Сповіщення (дзвіночок у топбарі, dropdown_header) ──
+
+export interface AppNotification {
+  id: string;
+  title: string;
+  text: string;
+  time: string;
+  unread?: boolean;
+}
+
+export const NOTIFICATIONS: AppNotification[] = [
+  { id: "nt1", title: "Нова оцінка", text: "UX-UI дизайн: Тема 5 — 10/10", time: "12 хв тому", unread: true },
+  { id: "nt2", title: "Дедлайн завтра", text: "Дизайн проєктування: здача логотипу до 23:59", time: "2 год тому", unread: true },
+  { id: "nt3", title: "Зміна в розкладі", text: "Живопис у середу перенесено на 10:10", time: "вчора" },
+  { id: "nt4", title: "Новина коледжу", text: "Відкрита лекція від Readdle у середу о 17:00", time: "2 дні тому" },
+];

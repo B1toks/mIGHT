@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, GraduationCap, SquarePen, TrendingUp, Users } from "lucide-react";
+import { Home, GraduationCap, SquarePen, TrendingUp, Users, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,8 @@ const navItems = [
   { icon: TrendingUp, href: "/progress", tooltip: "Успішність" },
   // TODO(role): пункт «Журнал» — тільки для викладача
   { icon: Users, href: "/journal", tooltip: "Журнал" },
+  // TODO(role): пункт «Адмін» — тільки для адміністратора кафедри
+  { icon: Settings, href: "/admin", tooltip: "Адміністрування" },
 ];
 
 // Сайдбар з макета: вузька біла колонка, аватар згори,
