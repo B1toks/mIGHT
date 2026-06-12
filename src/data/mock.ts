@@ -409,3 +409,36 @@ export const ATTENDANCE_TABLE: Record<string, boolean[]> = {
   s8: [v, v, v, v, v, v, v, v, v],
   s9: [x, x, v, v, v, v, v, v, v],
 };
+
+// ── Адмінка: користувачі (users_students/teachers/admins — wireframe) ──
+
+export type AdminRole = "student" | "teacher" | "admin";
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  detail: string; // група / кафедра / роль
+  email: string;
+  phone: string;
+}
+
+export const ADMIN_USERS: Record<AdminRole, AdminUser[]> = {
+  student: GROUP_STUDENTS.map((s, i) => ({
+    id: `as${i}`,
+    name: s.name,
+    detail: "1Д-21",
+    email: s.email,
+    phone: s.phone,
+  })),
+  teacher: COURSES.slice(0, 6).map((c, i) => ({
+    id: `at${i}`,
+    name: c.teacher,
+    detail: c.title,
+    email: `teacher${i + 1}@might.edu`,
+    phone: "+(380) 93 000 00 00",
+  })),
+  admin: [
+    { id: "aa1", name: "Гончар Олександр Вікторович", detail: "Кафедра дизайну", email: "admin@might.edu", phone: "+(380) 93 111 11 11" },
+    { id: "aa2", name: "Шевченко Ірина Петрівна", detail: "Кафедра живопису", email: "i.shevchenko@might.edu", phone: "+(380) 93 222 22 22" },
+  ],
+};
