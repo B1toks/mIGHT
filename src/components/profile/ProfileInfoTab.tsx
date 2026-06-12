@@ -1,7 +1,7 @@
 export function ProfileInfoTab() {
   return (
     <div className="space-y-6 w-full">
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 bg-white dark:bg-zinc-900 shadow-sm">
+      <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 bg-card shadow-sm">
         <div className="flex items-center gap-5">
           <div className="w-20 h-20 rounded-full bg-zinc-400 shrink-0" />
           <div className="flex flex-col justify-center">
@@ -12,7 +12,7 @@ export function ProfileInfoTab() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 bg-white dark:bg-zinc-900 shadow-sm">
+      <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 bg-card shadow-sm">
         <h3 className="text-md font-semibold mb-4 dark:text-white">Персональні дані</h3>
 
         <div className="grid md:grid-cols-3 gap-6 text-sm">

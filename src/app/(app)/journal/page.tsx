@@ -30,7 +30,7 @@ export default function JournalPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Пошук"
-            className="bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm w-56 focus:outline-none focus:border-[var(--color-brand)]"
+            className="bg-card border rounded-full pl-4 pr-9 py-1.5 text-sm w-56 focus:outline-none focus:border-[var(--color-brand)]"
           />
           <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
         </div>
@@ -39,7 +39,7 @@ export default function JournalPage() {
           <select
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="appearance-none bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer"
+            className="appearance-none bg-card border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer"
           >
             <option>Обрати предмет</option>
             {subjects.map((s) => (
@@ -54,7 +54,7 @@ export default function JournalPage() {
         {groups.map((g) => (
           <div
             key={g.id}
-            className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr_1.3fr_auto] gap-4 items-center bg-white dark:bg-zinc-900 rounded-2xl border p-5"
+            className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr_1.3fr_auto] gap-4 items-center bg-card rounded-2xl border p-5"
           >
             <div>
               <span className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-medium ${g.chipClass}`}>
@@ -81,7 +81,7 @@ export default function JournalPage() {
         ))}
 
         {groups.length === 0 && (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
+          <div className="bg-card rounded-2xl border p-10 text-center text-muted-foreground">
             Груп за цим фільтром немає
           </div>
         )}

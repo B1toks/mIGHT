@@ -22,7 +22,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-16 bg-white dark:bg-zinc-900 border-r flex flex-col items-center py-4 gap-3 shrink-0">
+    <aside className="hidden md:flex w-16 bg-card border-r flex-col items-center py-4 gap-3 shrink-0">
       <Link href="/profile" aria-label="Особистий кабінет">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 mb-4 cursor-pointer ring-2 ring-transparent hover:ring-[var(--color-brand)] transition" />
       </Link>

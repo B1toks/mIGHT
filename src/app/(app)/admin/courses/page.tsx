@@ -26,7 +26,7 @@ export default function AdminCoursesPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Пошук курсу"
-            className="bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm w-56 focus:outline-none focus:border-[var(--color-brand)]"
+            className="bg-card border rounded-full pl-4 pr-9 py-1.5 text-sm w-56 focus:outline-none focus:border-[var(--color-brand)]"
           />
           <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
         </div>
@@ -41,7 +41,7 @@ export default function AdminCoursesPage() {
         {courses.map((c) => (
           <div
             key={c.id}
-            className="grid grid-cols-1 md:grid-cols-[1.6fr_1.2fr_auto_auto] gap-4 items-center bg-white dark:bg-zinc-900 rounded-2xl border px-5 py-4"
+            className="grid grid-cols-1 md:grid-cols-[1.6fr_1.2fr_auto_auto] gap-4 items-center bg-card rounded-2xl border px-5 py-4"
           >
             <p className="font-semibold">{c.title}</p>
             <span className="text-sm text-muted-foreground">
@@ -60,7 +60,7 @@ export default function AdminCoursesPage() {
         ))}
 
         {courses.length === 0 && (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
+          <div className="bg-card rounded-2xl border p-10 text-center text-muted-foreground">
             Курсів не знайдено
           </div>
         )}

@@ -239,7 +239,7 @@ export default function MessengerApp() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[380px] h-[600px] max-h-[calc(100vh-8rem)] bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-700 flex flex-col overflow-hidden">
+        <div className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-8rem)] bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-700 flex flex-col overflow-hidden">
           {view === "list" && (
             <ChatListView onOpenChat={openChat} onOpenSearch={() => setView("search")} />
           )}

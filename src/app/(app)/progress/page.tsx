@@ -20,7 +20,7 @@ function SubjectCard({
 }: (typeof SUBJECT_GRADES)[number]) {
   const filled = Math.round((progress / 100) * SEGMENTS);
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-5">
+    <div className="bg-card rounded-2xl border p-5">
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 className="font-semibold">{subject}</h3>
@@ -114,7 +114,7 @@ export default function ProgressPage() {
           ))}
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6 space-y-6">
+        <div className="bg-card rounded-2xl border p-6 space-y-6">
           <div>
             <div className="flex items-center justify-between gap-2">
               <h3 className="font-semibold">Останні оцінки</h3>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Bell, MessageCircle } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 import { NOTIFICATIONS } from "@/data/mock";
 
 // Топбар з макета: логотип mIGHT зліва, дзвіночок (з дропдауном
@@ -21,7 +22,7 @@ const Topbar = () => {
   }, []);
 
   return (
-    <header className="h-16 bg-white dark:bg-zinc-900 border-b flex items-center justify-between px-8 shrink-0">
+    <header className="h-16 bg-card border-b flex items-center justify-between px-4 md:px-8 shrink-0">
       <Link href="/main" className="select-none">
         <span className="text-2xl font-black italic text-[var(--color-brand)] tracking-tight">
           MIGHT
@@ -30,6 +31,7 @@ const Topbar = () => {
       </Link>
 
       <div className="flex items-center gap-5">
+        <ThemeToggle />
         <div className="relative" ref={ref}>
           <button
             onClick={() => setOpen(!open)}
@@ -43,7 +45,7 @@ const Topbar = () => {
           </button>
 
           {open && (
-            <div className="absolute right-0 top-9 z-50 w-80 bg-white dark:bg-zinc-900 rounded-2xl border shadow-xl overflow-hidden">
+            <div className="absolute right-0 top-9 z-50 w-80 bg-card rounded-2xl border shadow-xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b">
                 <p className="font-semibold text-sm">Сповіщення</p>
                 {/* TODO(backend): PATCH notifications/read-all */}

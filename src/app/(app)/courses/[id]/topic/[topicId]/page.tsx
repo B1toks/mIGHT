@@ -80,7 +80,7 @@ export default function TopicPage({
       <div className="flex items-center gap-3">
         <Link
           href={`/courses/${id}`}
-          className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border flex items-center justify-center hover:border-[var(--color-brand)] transition"
+          className="w-9 h-9 rounded-full bg-card border flex items-center justify-center hover:border-[var(--color-brand)] transition"
           aria-label="Назад до курсу"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -92,7 +92,7 @@ export default function TopicPage({
             className={
               t === tab
                 ? "px-5 py-1.5 rounded-full text-sm font-medium bg-[var(--color-brand)] text-white"
-                : "px-5 py-1.5 rounded-full text-sm font-medium bg-white dark:bg-zinc-900 border hover:border-[var(--color-brand)] transition"
+                : "px-5 py-1.5 rounded-full text-sm font-medium bg-card border hover:border-[var(--color-brand)] transition"
             }
           >
             {t}
@@ -102,7 +102,7 @@ export default function TopicPage({
 
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 items-start">
         {/* Список тем */}
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-2">
+        <div className="bg-card rounded-2xl border p-2">
           {TOPICS.map((t) => (
             <Link
               key={t.id}
@@ -122,7 +122,7 @@ export default function TopicPage({
         </div>
 
         {tab === "Матеріали" ? (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+          <div className="bg-card rounded-2xl border p-6">
             <div className="flex items-center justify-between gap-2 mb-4">
               <h2 className="text-lg font-semibold">Матеріали</h2>
               <button className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition">
@@ -141,14 +141,14 @@ export default function TopicPage({
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+            <div className="bg-card rounded-2xl border p-6">
               <h2 className="text-lg font-semibold mb-2">Домашнє завдання</h2>
               <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
                 {TOPIC_HOMEWORK.description}
               </p>
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+            <div className="bg-card rounded-2xl border p-6">
               <h2 className="text-lg font-semibold">Завантажити файл</h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Завантажте виконану роботу і додайте короткий опис:

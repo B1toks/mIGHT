@@ -19,7 +19,7 @@ export default function PillTabs({
           className={
             tab === active
               ? "px-5 py-1.5 rounded-full text-sm font-medium bg-[var(--color-brand)] text-white"
-              : "px-5 py-1.5 rounded-full text-sm font-medium bg-white dark:bg-zinc-900 border text-gray-700 dark:text-gray-300 hover:border-[var(--color-brand)] transition-colors"
+              : "px-5 py-1.5 rounded-full text-sm font-medium bg-card border text-gray-700 dark:text-gray-300 hover:border-[var(--color-brand)] transition-colors"
           }
         >
           {tab}

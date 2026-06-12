@@ -54,7 +54,7 @@ function StatCard({
   href: string;
 }) {
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-5 flex items-start justify-between">
+    <div className="bg-card rounded-2xl border p-5 flex items-start justify-between">
       <div>
         <p className="text-3xl font-bold">{value}</p>
         <p className="text-sm text-muted-foreground mt-1">{label}</p>
@@ -89,7 +89,7 @@ export default function MainPage() {
         <StatCard value={DASHBOARD.coursesCount} label="Мої курси" href="/courses" />
         <StatCard value={DASHBOARD.undoneTasks} label="Невиконаних завдань" href="/tasks" />
 
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-4 lg:col-span-2 flex items-center gap-4">
+        <div className="bg-card rounded-2xl border p-4 lg:col-span-2 flex items-center gap-4">
           <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-200 to-orange-400 shrink-0" />
           <div className="min-w-0 flex-1">
             <p className="font-semibold">{DASHBOARD.announcement.author}</p>

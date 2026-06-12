@@ -10,7 +10,7 @@ export default function CourseCard({ course }: { course: Course }) {
   return (
     <Link
       href={`/courses/${course.id}`}
-      className="block bg-white dark:bg-zinc-900 rounded-2xl border p-5 hover:shadow-md hover:border-[var(--color-brand)]/40 transition"
+      className="block bg-card rounded-2xl border p-5 hover:shadow-md hover:border-[var(--color-brand)]/40 transition"
     >
       <h3 className="font-semibold text-lg leading-snug">{course.title}</h3>
       <p className="text-sm text-muted-foreground mt-1">

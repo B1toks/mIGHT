@@ -55,10 +55,11 @@ export default function ScheduleCalendar({ lessons = WEEK_LESSONS }: { lessons?:
   const bodyHeight = (DAY_END - DAY_START) * PX_PER_MIN;
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+    <div className="bg-card rounded-2xl border p-6">
       <h2 className="text-lg font-semibold mb-4">Робочий календар</h2>
 
-      <div className="grid" style={{ gridTemplateColumns: "48px repeat(7, 1fr)" }}>
+      <div className="overflow-x-auto">
+      <div className="grid min-w-[640px]" style={{ gridTemplateColumns: "48px repeat(7, 1fr)" }}>
         <div />
         {DAYS.map((d) => (
           <div
@@ -117,6 +118,7 @@ export default function ScheduleCalendar({ lessons = WEEK_LESSONS }: { lessons?:
               )}
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

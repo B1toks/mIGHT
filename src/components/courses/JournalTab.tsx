@@ -108,7 +108,7 @@ export default function JournalTab({ role }: JournalTabProps) {
   // Якщо роль студента, показуємо повідомлення про недоступність
   if (role === 'student') {
     return (
-      <div className="p-8 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-xl border dark:border-white/20">
+      <div className="p-8 bg-card text-gray-900 dark:text-white rounded-xl border dark:border-white/20">
         <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
           <div className="text-6xl mb-4">📚</div>
           <h2 className="text-2xl font-semibold mb-2">Журнал недоступний</h2>
@@ -237,7 +237,7 @@ export default function JournalTab({ role }: JournalTabProps) {
   );
 
   return (
-    <div className="p-4 md:p-8 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white rounded-xl overflow-x-auto border dark:border-white/20">
+    <div className="p-4 md:p-8 bg-card text-gray-900 dark:text-white rounded-xl overflow-x-auto border dark:border-white/20">
       <CustomTabs />
 
       {/* Students Tab */}

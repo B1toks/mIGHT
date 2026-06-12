@@ -86,7 +86,7 @@ export default function TasksPage() {
           <select
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="appearance-none bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer"
+            className="appearance-none bg-card border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer"
           >
             <option>Обрати предмет</option>
             {subjects.map((s) => (
@@ -98,7 +98,7 @@ export default function TasksPage() {
       </div>
 
       <div>
-        <div className="grid grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 px-5 pb-2 text-xs text-muted-foreground">
+        <div className="hidden md:grid grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 px-5 pb-2 text-xs text-muted-foreground">
           <span>Заняття</span>
           <span>Дата</span>
           <span>Домашнє завдання</span>
@@ -110,9 +110,9 @@ export default function TasksPage() {
           {rows.map((task) => (
             <div
               key={task.id}
-              className="grid grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 items-center bg-white dark:bg-zinc-900 rounded-2xl border p-5"
+              className="grid grid-cols-2 md:grid-cols-[1.8fr_0.8fr_1fr_0.7fr_1fr] gap-4 items-center bg-card rounded-2xl border p-5"
             >
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <span
                   className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-medium ${SUBJECT_CHIP[task.color]}`}
                 >
@@ -148,7 +148,7 @@ export default function TasksPage() {
           ))}
 
           {rows.length === 0 && (
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
+            <div className="bg-card rounded-2xl border p-10 text-center text-muted-foreground">
               Завдань у цій категорії немає
             </div>
           )}

@@ -11,7 +11,7 @@ export default function NewsPage() {
         {NEWS_POSTS.map((post) => (
           <article
             key={post.id}
-            className="bg-white dark:bg-zinc-900 rounded-2xl border p-6"
+            className="bg-card rounded-2xl border p-6"
           >
             <header className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-full bg-gradient-to-br from-sky-300 to-indigo-400 shrink-0" />

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import { applyTheme, getStoredTheme, type ThemeMode } from "@/lib/theme";
 import { STUDENT_PROFILE, NOTIFICATION_SETTINGS } from "@/data/mock";
 
 // Таб «Налаштування» кабінету (account setting student user):
@@ -30,6 +31,18 @@ function Input({
 
 const THEMES = ["Системна", "Світла", "Темна"] as const;
 
+const THEME_MODE: Record<(typeof THEMES)[number], ThemeMode> = {
+  "Системна": "system",
+  "Світла": "light",
+  "Темна": "dark",
+};
+
+const MODE_LABEL: Record<ThemeMode, (typeof THEMES)[number]> = {
+  system: "Системна",
+  light: "Світла",
+  dark: "Темна",
+};
+
 function ThemePreview({ name }: { name: (typeof THEMES)[number] }) {
   // Мініатюра «вікна» як у макеті: світла/темна/розділена навпіл.
   const body =
@@ -50,6 +63,10 @@ function ThemePreview({ name }: { name: (typeof THEMES)[number] }) {
 
 export default function SettingsTab() {
   const [theme, setTheme] = useState<(typeof THEMES)[number]>("Світла");
+
+  useEffect(() => {
+    setTheme(MODE_LABEL[getStoredTheme()]);
+  }, []);
   const [notifications, setNotifications] = useState<boolean[]>(
     NOTIFICATION_SETTINGS.map(() => true)
   );
@@ -57,7 +74,7 @@ export default function SettingsTab() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <div className="bg-card rounded-2xl border p-6">
         <h2 className="text-lg font-semibold mb-4">Персональна інформація</h2>
 
         <div className="flex items-center gap-4 mb-5">
@@ -83,7 +100,7 @@ export default function SettingsTab() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <div className="bg-card rounded-2xl border p-6">
         <h2 className="text-lg font-semibold">Налаштування теми</h2>
         <p className="text-xs text-muted-foreground mt-0.5 mb-4">
           Оберіть тему інтерфейсу
@@ -91,7 +108,14 @@ export default function SettingsTab() {
 
         <div className="grid grid-cols-3 gap-4 max-w-2xl">
           {THEMES.map((t) => (
-            <button key={t} onClick={() => setTheme(t)} className="text-left">
+            <button
+              key={t}
+              onClick={() => {
+                setTheme(t);
+                applyTheme(THEME_MODE[t]);
+              }}
+              className="text-left"
+            >
               <div
                 className={`rounded-xl p-1 border-2 transition ${
                   theme === t ? "border-[var(--color-brand)]" : "border-transparent"
@@ -112,7 +136,7 @@ export default function SettingsTab() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <div className="bg-card rounded-2xl border p-6">
         <h2 className="text-lg font-semibold mb-3">Налаштування сповіщень</h2>
         <div className="divide-y">
           {NOTIFICATION_SETTINGS.map((label, i) => (

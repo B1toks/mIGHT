@@ -52,7 +52,7 @@ export default function RegisterForm({ role }: { role: "student" | "teacher" }) 
   const isStudent = role === "student";
 
   return (
-    <Card className="w-full max-w-md p-6 bg-white dark:bg-zinc-900 shadow-lg rounded-xl">
+    <Card className="w-full max-w-md p-6 bg-card shadow-lg rounded-xl">
       <CardHeader className="space-y-1">
         <h1 className="text-center text-2xl font-semibold">
           Реєстрація {isStudent ? "студента" : "викладача"}

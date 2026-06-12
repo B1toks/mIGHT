@@ -16,7 +16,7 @@ export default function AdminSchedulePage() {
 
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="relative">
-          <select className="appearance-none bg-white dark:bg-zinc-900 border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer">
+          <select className="appearance-none bg-card border rounded-full pl-4 pr-9 py-1.5 text-sm cursor-pointer">
             {TEACHER_GROUPS.map((g) => (
               <option key={g.id}>
                 {g.name} — {g.subject}

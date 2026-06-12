@@ -48,7 +48,7 @@ function ListTab() {
       {GROUP_STUDENTS.map((s) => (
         <div
           key={s.id}
-          className="grid grid-cols-1 md:grid-cols-[1.6fr_0.8fr_1.2fr_1.1fr_auto] gap-4 items-center bg-white dark:bg-zinc-900 rounded-2xl border px-5 py-3"
+          className="grid grid-cols-1 md:grid-cols-[1.6fr_0.8fr_1.2fr_1.1fr_auto] gap-4 items-center bg-card rounded-2xl border px-5 py-3"
         >
           <div className="flex items-center gap-3 min-w-0">
             <StudentAvatar name={s.name} />
@@ -71,13 +71,13 @@ function GradesTab() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2">
-          <button className="w-7 h-7 rounded-lg border bg-white dark:bg-zinc-900 flex items-center justify-center" aria-label="Попередній модуль">
+          <button className="w-7 h-7 rounded-lg border bg-card flex items-center justify-center" aria-label="Попередній модуль">
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="px-3 py-1 rounded-lg border bg-white dark:bg-zinc-900 text-sm">
+          <span className="px-3 py-1 rounded-lg border bg-card text-sm">
             Змістовий модуль 1
           </span>
-          <button className="w-7 h-7 rounded-lg border bg-white dark:bg-zinc-900 flex items-center justify-center" aria-label="Наступний модуль">
+          <button className="w-7 h-7 rounded-lg border bg-card flex items-center justify-center" aria-label="Наступний модуль">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -88,7 +88,7 @@ function GradesTab() {
         </button>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border overflow-x-auto">
+      <div className="bg-card rounded-2xl border overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b text-xs text-muted-foreground">
@@ -128,13 +128,13 @@ function AttendanceTab() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2">
-          <button className="w-7 h-7 rounded-lg border bg-white dark:bg-zinc-900 flex items-center justify-center" aria-label="Попередній період">
+          <button className="w-7 h-7 rounded-lg border bg-card flex items-center justify-center" aria-label="Попередній період">
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="px-3 py-1 rounded-lg border bg-white dark:bg-zinc-900 text-sm">
+          <span className="px-3 py-1 rounded-lg border bg-card text-sm">
             {ATTENDANCE_RANGE}
           </span>
-          <button className="w-7 h-7 rounded-lg border bg-white dark:bg-zinc-900 flex items-center justify-center" aria-label="Наступний період">
+          <button className="w-7 h-7 rounded-lg border bg-card flex items-center justify-center" aria-label="Наступний період">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -145,7 +145,7 @@ function AttendanceTab() {
         </button>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border overflow-x-auto">
+      <div className="bg-card rounded-2xl border overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b text-xs text-muted-foreground">
@@ -205,7 +205,7 @@ export default function GroupJournalPage({
       <div className="flex items-center gap-3">
         <Link
           href="/journal"
-          className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border flex items-center justify-center hover:border-[var(--color-brand)] transition"
+          className="w-9 h-9 rounded-full bg-card border flex items-center justify-center hover:border-[var(--color-brand)] transition"
           aria-label="Назад до груп"
         >
           <ArrowLeft className="w-4 h-4" />

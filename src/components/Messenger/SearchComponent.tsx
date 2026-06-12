@@ -38,7 +38,7 @@ const SearchComponent: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-zinc-900 text-black dark:text-white transition-colors duration-300">
+    <div className="flex flex-col h-full bg-card text-black dark:text-white transition-colors duration-300">
       <div className="p-4 border-b border-gray-200 dark:border-zinc-700">
         <div className="flex items-center justify-between mb-4">
           <button

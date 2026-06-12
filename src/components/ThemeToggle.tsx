@@ -1,31 +1,43 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import { applyTheme, getStoredTheme, isDarkApplied } from "@/lib/theme";
 
+// Компактний тумблер світла/темна для топбара.
+// Повний вибір (включно з «Системна») — у Кабінет → Налаштування.
 export default function ThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const isDark = savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-    setIsDarkMode(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
-  const toggleTheme = () => {
-    const newIsDark = !isDarkMode;
-    setIsDarkMode(newIsDark);
-    localStorage.setItem("theme", newIsDark ? "dark" : "light");
-    document.documentElement.classList.toggle("dark", newIsDark);
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
+    applyTheme(next ? "dark" : "light");
   };
 
   return (
-    <button 
-      onClick={toggleTheme}
-      className="fixed top-4 right-4 z-50 transition-colors bg-white dark:bg-zinc-900 text-black dark:text-white px-2 py-2 rounded-full outline-black outline-1  dark:outline-white"
+    <button
+      onClick={toggle}
+      className="text-gray-700 dark:text-gray-300 hover:text-[var(--color-brand)] transition-colors"
+      aria-label={dark ? "Світла тема" : "Темна тема"}
     >
-      {isDarkMode ? "🌙" : "☀️"}
+      {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
     </button>
   );
+}
+
+// Ініціалізація теми при старті (рендерить нічого) — живе в кореневому
+// лейауті, щоб тема застосовувалась і на auth-сторінках без топбара.
+export function ThemeInit() {
+  useEffect(() => {
+    document.documentElement.classList.toggle(
+      "dark",
+      isDarkApplied(getStoredTheme())
+    );
+  }, []);
+  return null;
 }

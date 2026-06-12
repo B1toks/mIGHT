@@ -82,15 +82,17 @@
   --sidebar-ring: oklch(0.707 0.022 261.325);
 }
 
+/* Темна тема mIGHT: глибокий синьо-сірий (палітра gray850–950 з
+   Figma color styles + темний месенджер), а не чисто-чорний. */
 .dark {
-  --background: oklch(0.13 0.028 261.692);
-  --foreground: oklch(0.985 0.002 247.839);
-  --card: oklch(0.21 0.034 264.665);
-  --card-foreground: oklch(0.985 0.002 247.839);
-  --popover: oklch(0.21 0.034 264.665);
-  --popover-foreground: oklch(0.985 0.002 247.839);
-  --primary: oklch(0.928 0.006 264.531);
-  --primary-foreground: oklch(0.21 0.034 264.665);
+  --background: oklch(0.16 0.02 262);
+  --foreground: oklch(0.95 0.005 248);
+  --card: oklch(0.21 0.025 262);
+  --card-foreground: oklch(0.95 0.005 248);
+  --popover: oklch(0.21 0.025 262);
+  --popover-foreground: oklch(0.95 0.005 248);
+  --primary: #2d68f8;
+  --primary-foreground: oklch(0.985 0.002 247.839);
   --secondary: oklch(0.278 0.033 256.848);
   --secondary-foreground: oklch(0.985 0.002 247.839);
   --muted: oklch(0.278 0.033 256.848);
@@ -106,8 +108,8 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.034 264.665);
-  --sidebar-foreground: oklch(0.985 0.002 247.839);
+  --sidebar: oklch(0.21 0.025 262);
+  --sidebar-foreground: oklch(0.95 0.005 248);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
   --sidebar-accent: oklch(0.278 0.033 256.848);
@@ -120,269 +122,45 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-
-@layer theme, base, components, utilities;
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css" layer(utilities);
-
-
-/* Тємки */
-
-body {
-  background-color: white;
-  color: black;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.dark body {
-  background-color: black;
-  color: white;
-}
-
-html {
-  transition: background-color 0.3s, color 0.3s;
-}
-
-html[data-theme="light"] {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-html[data-theme="dark"] {
-  background-color: #1a1a1a !important; 
-  color: #ffffff;
-}
-
-
-
-/* Calendar  */
-
-/* Calendar dark theme */
-/* Calendar custom styles */
-.rbc-calendar {
-  background-color: white;
-}
-
-.dark .rbc-calendar {
-  background-color: #18181b; /* bg-zinc-900 */
-  color: white;
-}
-
-.dark .rbc-time-content > * {
-  border-color: #333;
-}
-
-.dark .rbc-current-time-indicator {
-  background-color: red;
-  height: 2px;
-  z-index: 50;
-}
-
-.rbc-today {
-  background-color: rgba(255, 255, 0, 0.05) !important;
-}
-
-.dark .rbc-today {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-.rbc-event {
-  width: calc(100% + 10px) !important;
-}
-.dark .rbc-today {
-  background-color: rgba(255, 255, 0, 0.12) !important;
-  border-left: 4px solid #eab308 !important;
-}
-
-/* меседжер */
-@keyframes slide-in {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animate-slide-in {
-  animation: slide-in 0.3s ease-out forwards;
-}
-/* globals.css */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Animations */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
+/* ── Анімації ── */
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(52, 211, 153, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
-  }
-}
+.animate-fade-in { animation: fadeIn 0.3s ease-in forwards; }
+.animate-slide-in { animation: slideIn 0.3s ease-out forwards; }
+.animate-slide-up { animation: slideUp 0.3s ease-out forwards; }
 
-/* Custom animation classes */
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out forwards;
-}
+/* ── react-day-picker (ui/calendar) ── */
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.3s ease-out forwards;
-}
-
-.pulse-animation {
-  animation: pulse 2s infinite;
-}
-
-/* Custom utilities for transitions */
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-.transition-colors {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-.transition-transform {
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-/* прогрес */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fadeInUp {
-  animation: fadeInUp 0.5s ease-out;
-}
-
-/* Scrollbar стилі */
-.scrollbar-thin {
-  scrollbar-width: thin;
-}
-.scrollbar-thumb-zinc-800 {
-  scrollbar-color: #27272a transparent;
-}
-
-.event-dot-homework::after,
-.event-dot-test::after,
-.event-dot-exam::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.event-dot-homework::after {
-  background-color: #a3a3a3; /* або theme("colors.neutral.400") */
-}
-
-.event-dot-test::after {
-  background-color: #3b82f6; /* blue-500 */
-}
-
-.event-dot-exam::after {
-  background-color: #ef4444; /* red-500 */
-}
-
-/* Розтягує календарну сітку */
 .rdp {
-  --rdp-cell-size: 3.5rem; /* Збільш клітинки */
+  --rdp-cell-size: 3.5rem;
   width: 100% !important;
   max-width: 100% !important;
 }
 
 .rdp-table {
   width: 100%;
-  table-layout: fixed; 
-}
-
-
-
-* {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  @apply bg-white text-gray-900 dark:bg-black dark:text-white;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  table-layout: fixed;
 }

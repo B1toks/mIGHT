@@ -33,7 +33,7 @@ export default function ProfilePage() {
       <div className="flex items-center gap-3">
         <Link
           href="/main"
-          className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border flex items-center justify-center hover:border-[var(--color-brand)] transition"
+          className="w-9 h-9 rounded-full bg-card border flex items-center justify-center hover:border-[var(--color-brand)] transition"
           aria-label="Назад"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -42,7 +42,7 @@ export default function ProfilePage() {
       </div>
 
       {tab === "Інформація" && (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6 space-y-4">
+        <div className="bg-card rounded-2xl border p-6 space-y-4">
           <h2 className="text-lg font-semibold">Персональна інформація</h2>
 
           <div className="rounded-xl border p-5 flex items-center gap-4">

@@ -21,7 +21,7 @@ function PasswordField({ label }: { label: string }) {
 export default function SecurityTab() {
   return (
     <div className="space-y-4">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <div className="bg-card rounded-2xl border p-6">
         <h2 className="text-lg font-semibold">Пароль</h2>
         <p className="text-xs text-muted-foreground mt-0.5 mb-4">
           Змініть пароль, якщо вважаєте, що він міг бути скомпрометований
@@ -46,7 +46,7 @@ export default function SecurityTab() {
         </button>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+      <div className="bg-card rounded-2xl border p-6">
         <h2 className="text-lg font-semibold mb-4">2-етапна аутентифікація</h2>
 
         <div className="space-y-3 max-w-2xl">

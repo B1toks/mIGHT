@@ -44,7 +44,7 @@ function TeacherColumn({
 }) {
   return (
     <div className="space-y-4">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6 text-center">
+      <div className="bg-card rounded-2xl border p-6 text-center">
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-rose-200 to-amber-200 mx-auto" />
         <p className="font-semibold mt-4">{details.teacher.name}</p>
 
@@ -71,7 +71,7 @@ function TeacherColumn({
         {details.consultations.map((c) => (
           <div
             key={c.kind}
-            className="bg-white dark:bg-zinc-900 rounded-xl border p-4 flex items-start justify-between gap-2"
+            className="bg-card rounded-xl border p-4 flex items-start justify-between gap-2"
           >
             <div>
               <p className="text-sm font-semibold">{c.kind}</p>
@@ -107,7 +107,7 @@ export default function CoursePage({ params }: { params: Promise<{ id: string }>
       <div className="flex items-center gap-3">
         <Link
           href="/courses"
-          className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border flex items-center justify-center hover:border-[var(--color-brand)] transition"
+          className="w-9 h-9 rounded-full bg-card border flex items-center justify-center hover:border-[var(--color-brand)] transition"
           aria-label="Назад до курсів"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -117,7 +117,7 @@ export default function CoursePage({ params }: { params: Promise<{ id: string }>
 
       {tab === "Про курс" && (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4 items-start">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+          <div className="bg-card rounded-2xl border p-6">
             <h2 className="text-lg font-semibold">Інформація</h2>
 
             <div className="flex gap-2 mt-3 flex-wrap">
@@ -143,7 +143,7 @@ export default function CoursePage({ params }: { params: Promise<{ id: string }>
       )}
 
       {tab === "Завдання" && (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+        <div className="bg-card rounded-2xl border p-6">
           <h2 className="text-lg font-semibold mb-4">Теми курсу</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {TOPICS.map((t) => (
@@ -170,7 +170,7 @@ export default function CoursePage({ params }: { params: Promise<{ id: string }>
             {COURSE_NEWS.map((post) => (
               <article
                 key={post.id}
-                className="bg-white dark:bg-zinc-900 rounded-2xl border p-6"
+                className="bg-card rounded-2xl border p-6"
               >
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-semibold">{post.title}</h3>
