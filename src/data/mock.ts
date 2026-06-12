@@ -328,3 +328,84 @@ export const CHAT_MESSAGES: ChatMessage[] = [
   { id: "m7", mine: true, text: "Ага, вчора ввечері трохи почала. Там треба просто на прикладі якогось фільму/ситуації описати цінність", time: "16:32" },
   { id: "m8", mine: true, text: "Я писала про взаємоповагу і навела \"Слугу народу\"", time: "16:32" },
 ];
+
+// ── Журнал викладача (my groups / group list / grades / attendance) ──
+
+export interface TeacherGroup {
+  id: string;
+  subject: string;
+  chipClass: string;
+  name: string;
+  members: number;
+  membersChipClass: string;
+  range: string;
+}
+
+export const TEACHER_GROUPS: TeacherGroup[] = [
+  { id: "1d-21", subject: "UX-UI Дизайн", chipClass: "bg-lime-100 text-lime-800", name: "1Д-21", members: 24, membersChipClass: "bg-lime-100 text-lime-800", range: "03.09.2024 - 12.05.2025" },
+  { id: "3d-23", subject: "Живопис", chipClass: "bg-amber-100 text-amber-700", name: "3Д-23", members: 16, membersChipClass: "bg-amber-100 text-amber-700", range: "02.09.2024 - 23.05.2025" },
+  { id: "2d-20", subject: "Дизайн проєктування", chipClass: "bg-emerald-100 text-emerald-700", name: "2Д-20", members: 9, membersChipClass: "bg-emerald-100 text-emerald-700", range: "01.09.2024 - 12.05.2025" },
+  { id: "1d-24", subject: "Рисунок", chipClass: "bg-cyan-100 text-cyan-700", name: "1Д-24", members: 12, membersChipClass: "bg-cyan-100 text-cyan-700", range: "04.09.2024 - 21.05.2025" },
+  { id: "2d-22", subject: "Графічні техніки", chipClass: "bg-pink-100 text-pink-700", name: "2Д-22", members: 14, membersChipClass: "bg-pink-100 text-pink-700", range: "09.09.2024 - 24.05.2025" },
+];
+
+export interface GroupStudent {
+  id: string;
+  name: string;
+  speciality: string;
+  email: string;
+  phone: string;
+}
+
+export const GROUP_STUDENTS: GroupStudent[] = [
+  { id: "s1", name: "Афанасьєва Дар'я Олександрівна", speciality: "022 Дизайн", email: "fr0gg0cat1@gmail.com", phone: "+(380) 93 109 18 03" },
+  { id: "s2", name: "Конопенко Віталій Олександрович", speciality: "022 Дизайн", email: "konop@gmail.com", phone: "+(380) 98 121 12 43" },
+  { id: "s3", name: "Гордієнко Андрій Сергійович", speciality: "022 Дизайн", email: "gordienko@gmail.com", phone: "+(380) 93 219 56 92" },
+  { id: "s4", name: "Макарова Ольга Степанівна", speciality: "022 Дизайн", email: "olyamak@gmail.com", phone: "+(380) 98 173 24 35" },
+  { id: "s5", name: "Дорошенко Іван Ігорович", speciality: "022 Дизайн", email: "doroshiv@gmail.com", phone: "+(380) 93 923 16 32" },
+  { id: "s6", name: "Приходько Миколай Григорович", speciality: "022 Дизайн", email: "prih0dniok@gmail.com", phone: "+(380) 96 962 94 03" },
+  { id: "s7", name: "Гущенко Марія Владиславівна", speciality: "022 Дизайн", email: "guschenko@gmail.com", phone: "+(380) 93 109 18 03" },
+  { id: "s8", name: "Верещук Наталія Максимівна", speciality: "022 Дизайн", email: "natali93@gmail.com", phone: "+(380) 93 734 92 43" },
+  { id: "s9", name: "Абраменко Данііл Юрійович", speciality: "022 Дизайн", email: "abramenko@gmail.com", phone: "+(380) 93 109 18 03" },
+];
+
+// Оцінки: змістовий модуль 1, теми з максимумами
+export const GRADE_TOPICS = [
+  { title: "Тема 1. Назва", max: 12 },
+  { title: "Тема 2. Назва", max: 20 },
+  { title: "Тема 3. Назва", max: 15 },
+  { title: "Тема 4. Назва", max: 30 },
+  { title: "Тема 5. Назва", max: 10 },
+];
+
+export const GRADES_TABLE: Record<string, number[]> = {
+  s1: [8, 19, 8, 19, 9],
+  s2: [4, 12, 3, 27, 3],
+  s3: [3, 8, 10, 12, 5],
+  s4: [10, 11, 9, 23, 6],
+  s5: [12, 10, 12, 15, 3],
+  s6: [8, 18, 14, 14, 8],
+  s7: [8, 14, 6, 27, 7],
+  s8: [11, 5, 13, 22, 8],
+  s9: [9, 19, 10, 26, 5],
+};
+
+export const ATTENDANCE_DATES = [
+  "03.09.2024", "10.09.2024", "17.09.2024", "24.09.2024", "01.10.2024",
+  "08.10.2024", "15.10.2024", "22.10.2024", "29.10.2024",
+];
+
+export const ATTENDANCE_RANGE = "03.09.2024 - 29.10.2024";
+
+const v = true, x = false;
+export const ATTENDANCE_TABLE: Record<string, boolean[]> = {
+  s1: [v, v, v, v, v, v, v, v, x],
+  s2: [v, v, v, x, v, x, v, v, v],
+  s3: [v, x, v, v, v, v, v, v, v],
+  s4: [x, v, x, v, v, v, v, x, v],
+  s5: [v, v, v, v, v, v, v, v, v],
+  s6: [v, v, v, v, x, v, v, v, v],
+  s7: [v, v, v, v, v, v, v, v, v],
+  s8: [v, v, v, v, v, v, v, v, v],
+  s9: [x, x, v, v, v, v, v, v, v],
+};
