@@ -2,9 +2,9 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ChevronDown, Link2 } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, Link2 } from "lucide-react";
 import PillTabs from "@/components/PillTabs";
-import { COURSES, COURSE_DETAILS } from "@/data/mock";
+import { COURSES, COURSE_DETAILS, TOPICS } from "@/data/mock";
 
 // Сторінка курсу: таби «Про курс / Завдання / Новини».
 // Поки що повністю реалізований таб «Про курс» (макет course info student user);
@@ -126,8 +126,24 @@ export default function CoursePage({ params }: { params: Promise<{ id: string }>
       )}
 
       {tab === "Завдання" && (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
-          Матеріали та домашні завдання курсу — в роботі (наступний екран макета).
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-6">
+          <h2 className="text-lg font-semibold mb-4">Теми курсу</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {TOPICS.map((t) => (
+              <Link
+                key={t.id}
+                href={`/courses/${id}/topic/${t.id}`}
+                className="flex items-center justify-between px-4 py-3 rounded-xl border hover:border-[var(--color-brand)] transition text-sm"
+              >
+                {t.title}
+                {t.done && (
+                  <span className="w-[18px] h-[18px] rounded bg-[var(--color-lime)] flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-white" />
+                  </span>
+                )}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
 

@@ -233,3 +233,56 @@ export const DASHBOARD = {
     text: "Цього тижня 14.04.2025 в коледжі відбуватиметься день відкритих дверей.",
   },
 };
+
+// ── Дані сторінки теми курсу (матеріали + домашнє завдання) ──
+
+export interface Topic {
+  id: number;
+  title: string;
+  done: boolean;
+}
+
+export const TOPICS: Topic[] = Array.from({ length: 11 }, (_, i) => ({
+  id: i + 1,
+  title: `Тема ${i + 1}: Назва`,
+  done: true,
+}));
+
+export type MaterialKind = "file" | "video" | "text" | "test";
+
+export interface Material {
+  id: string;
+  kind: MaterialKind;
+  title: string;
+  subtitle: string;
+  action: "import" | "view";
+}
+
+export const TOPIC_MATERIALS: Material[] = [
+  { id: "m1", kind: "file", title: "Презентація Назва", subtitle: "Файл", action: "import" },
+  { id: "m2", kind: "video", title: "Назва", subtitle: "Відео", action: "view" },
+  { id: "m3", kind: "text", title: "Назва", subtitle: "Текст", action: "view" },
+  { id: "m4", kind: "test", title: "Назва", subtitle: "Тест", action: "view" },
+];
+
+export const TOPIC_HOMEWORK = {
+  description:
+    "Розробіть інтерактивний прототип мобільного додатку для замовлення кави в собою. Необхідно створити кілька основних екранів, зокрема головний екран, меню замовлення та екран підтвердження. У завданні слід звернути увагу на логіку взаємодії користувача з інтерфейсом, зручність навігації та відповідність дизайну принципам сучасного UI/UX.",
+  maxScore: 10,
+  maxFileSize: "100 мб",
+};
+
+// ── Налаштування кабінету ──
+
+export const NOTIFICATION_SETTINGS = [
+  "Сповіщення про зміни в розкладі",
+  "Про нові завдання",
+  "Про оцінювання надісланих завдань",
+  "Про нові повідомлення у чатах",
+  "Про новини коледжу",
+];
+
+export const CONNECTED_ACCOUNTS = [
+  { id: "google", name: "Google", email: "fr0gg0cat1@gmail.com", connected: true },
+  { id: "facebook", name: "Facebook", email: "Софія Монько", connected: false },
+];

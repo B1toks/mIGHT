@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import PillTabs from "@/components/PillTabs";
+import SettingsTab from "@/components/profile/SettingsTab";
+import SecurityTab from "@/components/profile/SecurityTab";
 import { STUDENT_PROFILE } from "@/data/mock";
 
 // «Особистий кабінет» з макета: таби Інформація / Налаштування / Безпека.
@@ -69,17 +71,9 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {tab === "Налаштування" && (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
-          Налаштування (тема, сповіщення) — наступний екран макета.
-        </div>
-      )}
+      {tab === "Налаштування" && <SettingsTab />}
 
-      {tab === "Безпека" && (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border p-10 text-center text-muted-foreground">
-          Безпека (пароль, 2-етапна перевірка) — наступний екран макета.
-        </div>
-      )}
+      {tab === "Безпека" && <SecurityTab />}
     </div>
   );
 }
