@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# внутрішні документи — не для GitHub
+docs/business-model.md
